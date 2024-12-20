@@ -4,8 +4,9 @@ using Bulky.DataAcess.Data;
 using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KitabimUcuz.Controllers
+namespace KitabimUcuz.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -30,7 +31,7 @@ namespace KitabimUcuz.Controllers
             {
                 ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name.");
             }
-            
+
             if (ModelState.IsValid)
             {
                 _unitOfWork.Category.Add(obj);
@@ -47,7 +48,7 @@ namespace KitabimUcuz.Controllers
             {
                 return NotFound();
             }
-            Category? categoryFromDb = _unitOfWork.Category.Get(u=>u.Id==id);
+            Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
             //Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==id);
             //Category? categoryFromDb2 = _db.Categories.Where(u=>u.Id==id).FirstOrDefault();
 
@@ -59,7 +60,7 @@ namespace KitabimUcuz.Controllers
         }
         [HttpPost]
         public IActionResult Edit(Category obj)
-        {   
+        {
             if (ModelState.IsValid)
             {
                 _unitOfWork.Category.Update(obj);
